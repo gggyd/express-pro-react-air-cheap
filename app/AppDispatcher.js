@@ -1,5 +1,5 @@
 import {Dispatcher} from 'flux';
-// import 'babel-polyfill';
+import 'babel-polyfill';
 
 class AppDispatcher extends Dispatcher {
   dispatch(action = {}) {
@@ -8,25 +8,25 @@ class AppDispatcher extends Dispatcher {
     super.dispatch(action);
   }
 
-  // dispatchAsync(promise, types, payload) {
-  //   const { request, success, failure } = types;
-  //   this.dispatch({
-  //     type: request, payload: Object.assign({}, payload)
-  //   });
+  dispatchAsync(promise, types, payload) {
+    const { request, success, failure } = types;
+    this.dispatch({
+      type: request, payload: Object.assign({}, payload)
+    });
 
-  //   promise.then(
-  //     (response) => {
-  //       this.dispatch({
-  //         type: success,
-  //         payload: Object.assign({}, payload, { response })
-  //       })
-  //     },
-  //     error => this.dispatch({
-  //       type: failure,
-  //       payload: Object.assign({}, payload, { error })
-  //     })
-  //   );
-  // }
+    promise.then(
+      (response) => {
+        this.dispatch({
+          type: success,
+          payload: Object.assign({}, payload, { response })
+        })
+      },
+      error => this.dispatch({
+        type: failure,
+        payload: Object.assign({}, payload, { error })
+      })
+    );
+  }
 }
 
 export default new AppDispatcher();
